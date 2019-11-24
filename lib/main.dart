@@ -9,9 +9,10 @@ class SuburbanSpoon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         title: 'SuburbanSpoon',
         theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: new Color(0xff622f74),
       ),
       home: MainScreen(),
     );
