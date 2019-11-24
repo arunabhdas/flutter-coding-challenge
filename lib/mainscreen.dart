@@ -31,14 +31,50 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       body: Center(
-        child: RaisedButton(
-          child: Text('Next Screen'),
-          color: new Color(0xff622f74),
-          onPressed: () {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => DetailScreen()),
-            );
-          },
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child:
+                    DropdownButton<String>(
+                      items: <String>['1', '2', '3', '4'].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (_) {},
+                    ),
+                ),
+                Expanded(
+                  child:
+                    DropdownButton<String>(
+                      items: <String>['1', '2', '3', '4'].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (_) {},
+                    ),
+                )
+              ],
+            ),
+            Row(
+             children: <Widget>[
+               RaisedButton(
+                 child: Text('Next Screen'),
+                 color: new Color(0xff622f74),
+                 onPressed: () {
+                   Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => DetailScreen()),
+                   );
+                 },
+               ),
+             ],
+            )
+          ],
         ),
       ),
     );
