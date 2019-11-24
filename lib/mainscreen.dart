@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'detailscreen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -14,6 +15,17 @@ class MainScreen extends StatelessWidget {
 
           },)
         ],
+      ),
+      body: Center(
+        child: RaisedButton(
+          child: Text('Next Screen-'),
+          color: new Color(0xff622f74),
+          onPressed: () {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DetailScreen()),
+            );
+          },
+        ),
       ),
     );
   }
