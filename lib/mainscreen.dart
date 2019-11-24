@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'detailscreen.dart';
+import 'package:http/http.dart' show get;
 
 class MainScreen extends StatefulWidget {
 
@@ -63,21 +65,45 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Row(
              children: <Widget>[
-               RaisedButton(
-                 child: Text('Next Screen'),
-                 color: new Color(0xff622f74),
-                 onPressed: () {
-                   Navigator.push(context,
-                     MaterialPageRoute(builder: (context) => DetailScreen()),
-                   );
-                 },
+               Expanded(
+                 child: RaisedButton(
+                   child: Text('Spin'),
+                   color: new Color(0xff622f74),
+                   onPressed: () {
+                     Navigator.push(context,
+                       MaterialPageRoute(builder: (context) => DetailScreen()),
+                     );
+                   },
+                 ),
                ),
              ],
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: RaisedButton(
+                    child: Text('Next Screen'),
+                    color: new Color(0xff622f74),
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DetailScreen()),
+                      );
+                    },
+                  ),
+                ),
+              ],
             )
           ],
         ),
       ),
     );
+  }
+
+  void _makeCuisinesRequest() async {
+    var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
+    Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
+    Response response = await get(url, headers: headers);
+    print(response.body);
   }
 }
 
