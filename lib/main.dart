@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(SuburbanSpoon());
+void main() {
+  return runApp(SuburbanSpoon());
+}
 
 class SuburbanSpoon extends StatelessWidget {
   @override
