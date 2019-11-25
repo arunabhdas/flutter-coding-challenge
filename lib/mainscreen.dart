@@ -55,12 +55,13 @@ class _MainScreenState extends State<MainScreen> {
                 Expanded(
                   child:
                     DropdownButton<String>(
-                      items: <String>['1', '2', '3', '4'].map((String value) {
+                      items: _cuisineList.map((CuisineCuisine cuisineCuisine) {
                         return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
+                          value: cuisineCuisine.cuisineId.toString(),
+                          child: new Text(cuisineCuisine.cuisineName),
                         );
                       }).toList(),
+
                       onChanged: (_) {},
                     ),
                 ),
@@ -168,7 +169,7 @@ class _MainScreenState extends State<MainScreen> {
     List<CuisineElement> cuisineElementsList = [];
     List<CuisineCuisine> cuisineList = [];
     var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
-    Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
+    Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9", "Accept": "application/json"};
     Response response = await get(url, headers: headers);
     var data = json.decode(response.body);
 
@@ -176,12 +177,19 @@ class _MainScreenState extends State<MainScreen> {
 
     cuisineElementsList = rest.map<CuisineElement>( (json) => CuisineElement.fromJson(json)).toList();
 
+
+
     for (CuisineElement cui in cuisineElementsList) {
-      print(cui.cuisine.cuisineName);
       CuisineCuisine cuisine = CuisineCuisine(cuisineId: cui.cuisine.cuisineId, cuisineName: cui.cuisine.cuisineName);
       cuisineList.add(cuisine);
+      // _cuisineList.add(cuisine);
     }
 
+    this.setState(() {
+      _cuisineList = cuisineList;
+    });
+
+    print(cuisineList.toString());
     return cuisineList;
   }
 
