@@ -98,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
                               child: new Text(categorie.name),
                             );
                           }).toList(),
-
+                          isExpanded: true,
                           onChanged: (String newValueSelected) {
                             setState(() {
                               // TODO-FIXME-DEBUG
@@ -150,11 +150,22 @@ class _MainScreenState extends State<MainScreen> {
               children: <Widget>[
                 Expanded(
                     child: TextFormField(
-
                         decoration: InputDecoration(
                           labelText: _currentCuisineSelected,
-
-                    )
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: _currentCategorieSelected,
+                    ),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
