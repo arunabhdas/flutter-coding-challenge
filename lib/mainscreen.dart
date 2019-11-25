@@ -178,6 +178,8 @@ class _MainScreenState extends State<MainScreen> {
 
     for (CuisineElement cui in cuisineElementsList) {
       print(cui.cuisine.cuisineName);
+      CuisineCuisine cuisine = CuisineCuisine(cuisineId: cui.cuisine.cuisineId, cuisineName: cui.cuisine.cuisineName);
+      cuisineList.add(cuisine);
     }
 
     return cuisineList;
