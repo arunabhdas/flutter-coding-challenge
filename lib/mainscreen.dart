@@ -14,14 +14,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
+  String _currentAddress;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
           decoration: InputDecoration(
-            hintText: 'Search',
+            labelText: _currentAddress,
             prefixIcon: Icon(Icons.search),
           ),
         ),
@@ -102,6 +104,12 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
   void _makeCuisinesRequest() async {
     var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
     Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
@@ -110,8 +118,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   _getCurrentLocation() {
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
@@ -120,12 +126,31 @@ class _MainScreenState extends State<MainScreen> {
         if (_currentPosition != null) {
           print(_currentPosition.latitude);
           print(_currentPosition.longitude);
+          print('Location search was completed');
         }
       });
+      _getAddressFromLatLng();
     }).catchError((e) {
       print(e);
     });
   }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+        "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
 }
 
 class TextBox extends StatelessWidget {
