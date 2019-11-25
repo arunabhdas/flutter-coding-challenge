@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'detailscreen.dart';
 import 'package:http/http.dart' show get;
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -12,6 +14,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Position _currentPosition;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
 
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed: () {
-
+            _getCurrentLocation();
           },)
         ],
       ),
@@ -104,6 +107,24 @@ class _MainScreenState extends State<MainScreen> {
     Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
     Response response = await get(url, headers: headers);
     print(response.body);
+  }
+
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        if (_currentPosition != null) {
+          print(_currentPosition.latitude);
+          print(_currentPosition.longitude);
+        }
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 }
 
