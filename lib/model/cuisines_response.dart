@@ -1,4 +1,3 @@
-import 'cuisine_cuisine.dart';
 import 'cuisine_element.dart';
 
 class CuisinesResponse {

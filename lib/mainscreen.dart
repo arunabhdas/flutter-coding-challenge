@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_coding_challenge/model/categorie.dart';
+import 'package:flutter_coding_challenge/model/categorie_element.dart';
 import 'package:flutter_coding_challenge/model/cuisine_cuisine.dart';
 import 'package:flutter_coding_challenge/model/cuisine_element.dart';
 import 'package:http/http.dart';
@@ -82,16 +84,32 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 Expanded(
-                  child:
-                    DropdownButton<String>(
-                      items: <String>['1', '2', '3', '4'].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
+                  child: FutureBuilder(
+                    future: _loadCuisineList(),
+                    builder: (BuildContext context, AsyncSnapshot<List<CuisineCuisine>> snapshot) {
+                      if (snapshot.hasData) {
+                        List<CuisineCuisine> cList = snapshot.data;
+                        return DropdownButton<String>(
+                          items: cList.map((CuisineCuisine cuisineCuisine) {
+                            return new DropdownMenuItem<String>(
+                              value: cuisineCuisine.cuisineId.toString(),
+                              child: new Text(cuisineCuisine.cuisineName),
+                            );
+                          }).toList(),
+
+                          onChanged: (String newValueSelected) {
+                            setState(() {
+                              // TODO-FIXME-DEBUG
+                              this._currentCuisineSelected = newValueSelected;
+                            });
+                          },
+                          value:  this._currentCuisineSelected,
                         );
-                      }).toList(),
-                      onChanged: (_) {},
-                    ),
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
                 )
               ],
             ),
@@ -211,16 +229,37 @@ class _MainScreenState extends State<MainScreen> {
     for (CuisineElement cui in cuisineElementsList) {
       CuisineCuisine cuisine = CuisineCuisine(cuisineId: cui.cuisine.cuisineId, cuisineName: cui.cuisine.cuisineName);
       cuisineList.add(cuisine);
-      // _cuisineList.add(cuisine);
     }
 
-    this.setState(() {
-      // _cuisineList = cuisineList;
-    });
 
     print(cuisineList.toString());
     return cuisineList;
   }
+
+  Future<List<Categorie>> _loadCategorieList() async {
+    List<CategorieElement> categorieElementsList = [];
+    List<Categorie> categorieList = [];
+    var url = 'https://developers.zomato.com/api/v2.1/categories?city_id=89';
+    Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9", "Accept": "application/json"};
+    Response response = await get(url, headers: headers);
+    var data = json.decode(response.body);
+
+    var rest = data['cuisines'] as List;
+
+    categorieElementsList = rest.map<CategorieElement>( (json) => CategorieElement.fromJson(json)).toList();
+
+
+
+    for (CategorieElement cui in categorieElementsList) {
+      Categorie categorie = Categorie(id: cui.categories.id, name: cui.categories.name);
+      categorieList.add(categorie);
+    }
+
+
+    print(categorieList.toString());
+    return categorieList;
+  }
+
 
 }
 
