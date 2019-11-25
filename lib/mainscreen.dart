@@ -53,24 +53,31 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Expanded(
-                  child:
-                    DropdownButton<String>(
-                      items: _cuisineList.map((CuisineCuisine cuisineCuisine) {
-                        return new DropdownMenuItem<String>(
-                          value: cuisineCuisine.cuisineId.toString(),
-                          child: new Text(cuisineCuisine.cuisineName),
-                        );
-                      }).toList(),
+                FutureBuilder(
+                  future: _loadCuisineList(),
+                  builder: (BuildContext context, AsyncSnapshot<List<CuisineCuisine>> snapshot) {
+                    if (snapshot.hasData) {
+                      List<CuisineCuisine> cList = snapshot.data;
+                      return DropdownButton<String>(
+                        items: cList.map((CuisineCuisine cuisineCuisine) {
+                          return new DropdownMenuItem<String>(
+                            value: cuisineCuisine.cuisineId.toString(),
+                            child: new Text(cuisineCuisine.cuisineName),
+                          );
+                        }).toList(),
 
-                      onChanged: (String newValueSelected) {
+                        onChanged: (String newValueSelected) {
                           setState(() {
                             // TODO-FIXME-DEBUG
                             this._currentCuisineSelected = newValueSelected;
                           });
-                      },
-                      value: this._currentCuisineSelected,
-                    ),
+                        },
+                        // value: this._currentCuisineSelected,
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
                 Expanded(
                   child:
@@ -206,7 +213,7 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     this.setState(() {
-      _cuisineList = cuisineList;
+      // _cuisineList = cuisineList;
     });
 
     print(cuisineList.toString());
