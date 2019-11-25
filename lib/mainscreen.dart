@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_coding_challenge/model/cuisine.dart';
+import 'package:flutter_coding_challenge/model/cuisine_cuisine.dart';
+import 'package:flutter_coding_challenge/model/cuisine_element.dart';
 import 'package:http/http.dart';
 import 'detailscreen.dart';
 import 'package:http/http.dart' show get;
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'model/cuisines_response.dart';
+import 'model/cuisine_cuisine.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -22,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
-  List<Cuisine> _cuisineList = [];
+  List<CuisineCuisine> _cuisineList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +118,8 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _getCurrentLocation();
-    _makeCuisinesRequest();
+    // _makeCuisinesRequest();
+    _loadCuisineList();
   }
 
   void _makeCuisinesRequest() async {
@@ -161,19 +164,22 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  Future<List<Cuisine>> _loadCuisineList() async {
-    List<Cuisine> cuisineList = [];
+  Future<List<CuisineCuisine>> _loadCuisineList() async {
+    List<CuisineElement> cuisineElementsList = [];
+    List<CuisineCuisine> cuisineList = [];
     var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
     Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
-    Response data = await get(url, headers: headers);
-    var jsonData = json.decode(data.body);
-    cuisineList = new List<Cuisine>.from(jsonData['cuisines']);
+    Response response = await get(url, headers: headers);
+    var data = json.decode(response.body);
 
-    for (var cuisine in cuisineList) {
-      Cuisine cui = Cuisine(cuisineId: cuisine.cuisineId, cuisineName: cuisine.cuisineName);
-      cuisineList.add(cui);
+    var rest = data['cuisines'] as List;
+
+    cuisineElementsList = rest.map<CuisineElement>( (json) => CuisineElement.fromJson(json)).toList();
+
+    for (CuisineElement cui in cuisineElementsList) {
+      print(cui.cuisine.cuisineName);
     }
-    print(cuisineList);
+
     return cuisineList;
   }
 

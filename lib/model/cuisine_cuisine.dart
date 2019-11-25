@@ -1,13 +1,13 @@
-class Cuisine {
+class CuisineCuisine {
   int cuisineId;
   String cuisineName;
 
-  Cuisine({
+  CuisineCuisine({
     this.cuisineId,
     this.cuisineName,
   });
 
-  factory Cuisine.fromJson(Map<String, dynamic> json) => Cuisine(
+  factory CuisineCuisine.fromJson(Map<String, dynamic> json) => CuisineCuisine(
     cuisineId: json["cuisine_id"],
     cuisineName: json["cuisine_name"],
   );

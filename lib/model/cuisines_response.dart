@@ -1,21 +1,18 @@
-import 'cuisine.dart';
-
+import 'cuisine_cuisine.dart';
+import 'cuisine_element.dart';
 
 class CuisinesResponse {
-  List<Cuisine> cuisines;
+  List<CuisineElement> cuisines;
 
   CuisinesResponse({
     this.cuisines,
   });
 
   factory CuisinesResponse.fromJson(Map<String, dynamic> json) => CuisinesResponse(
-    cuisines: List<Cuisine>.from(json["cuisines"].map((x) => Cuisine.fromJson(x))),
+    cuisines: List<CuisineElement>.from(json["cuisines"].map((x) => CuisineElement.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "cuisines": List<dynamic>.from(cuisines.map((x) => x.toJson())),
   };
 }
-
-
-
