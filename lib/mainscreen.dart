@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   Position _currentPosition;
   String _currentAddress;
   List<CuisineCuisine> _cuisineList = [];
-  String _currentCuisineSelected = "Test";
+  String _currentCuisineSelected = "1035";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                             this._currentCuisineSelected = newValueSelected;
                           });
                         },
-                        // value: this._currentCuisineSelected,
+                        value:  this._currentCuisineSelected,
                       );
                     } else {
                       return Center(child: CircularProgressIndicator());
