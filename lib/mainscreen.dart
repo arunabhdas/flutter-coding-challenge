@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   Position _currentPosition;
   String _currentAddress;
   List<CuisineCuisine> _cuisineList = [];
+  String _currentCuisineSelected = "Test";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +63,12 @@ class _MainScreenState extends State<MainScreen> {
                         );
                       }).toList(),
 
-                      onChanged: (_) {},
+                      onChanged: (String newValueSelected) {
+                          setState(() {
+                            // TODO-FIXME-DEBUG
+                            this._currentCuisineSelected = newValueSelected;
+                          });
+                      },
                     ),
                 ),
                 Expanded(
@@ -105,6 +111,19 @@ class _MainScreenState extends State<MainScreen> {
                         MaterialPageRoute(builder: (context) => DetailScreen()),
                       );
                     },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                    child: TextFormField(
+
+                        decoration: InputDecoration(
+                          labelText: _currentCuisineSelected,
+
+                    )
                   ),
                 ),
               ],
