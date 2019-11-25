@@ -4,6 +4,7 @@ import 'detailscreen.dart';
 import 'package:http/http.dart' show get;
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'model/cuisines_response.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -22,8 +23,10 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          style: new TextStyle(color: Colors.white),
           decoration: InputDecoration(
             labelText: _currentAddress,
+            labelStyle: new TextStyle(color: Colors.white),
             prefixIcon: Icon(Icons.search),
           ),
         ),
@@ -108,12 +111,14 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _makeCuisinesRequest();
   }
 
   void _makeCuisinesRequest() async {
     var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
     Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
     Response response = await get(url, headers: headers);
+
     print(response.body);
   }
 

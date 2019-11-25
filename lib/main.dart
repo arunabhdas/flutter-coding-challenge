@@ -17,6 +17,8 @@ class SuburbanSpoon extends StatelessWidget {
         primarySwatch: Colors.yellow,
         buttonColor: Color(0XFFF8D320),
         buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
+        unselectedWidgetColor: Colors.white,
+        textSelectionColor: Colors.white,
         accentColor: Colors.green,
       ),
       home: MainScreen(),
