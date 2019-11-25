@@ -168,6 +168,7 @@ class _MainScreenState extends State<MainScreen> {
     _getCurrentLocation();
     // _makeCuisinesRequest();
     _loadCuisineList();
+    _loadCategorieList();
   }
 
   void _makeCuisinesRequest() async {
@@ -232,7 +233,6 @@ class _MainScreenState extends State<MainScreen> {
     }
 
 
-    print(cuisineList.toString());
     return cuisineList;
   }
 
@@ -244,7 +244,7 @@ class _MainScreenState extends State<MainScreen> {
     Response response = await get(url, headers: headers);
     var data = json.decode(response.body);
 
-    var rest = data['cuisines'] as List;
+    var rest = data['categories'] as List;
 
     categorieElementsList = rest.map<CategorieElement>( (json) => CategorieElement.fromJson(json)).toList();
 
@@ -253,10 +253,11 @@ class _MainScreenState extends State<MainScreen> {
     for (CategorieElement cui in categorieElementsList) {
       Categorie categorie = Categorie(id: cui.categories.id, name: cui.categories.name);
       categorieList.add(categorie);
+      print(categorie.name);
     }
 
 
-    print(categorieList.toString());
+    // print(categorieList.toString());
     return categorieList;
   }
 
