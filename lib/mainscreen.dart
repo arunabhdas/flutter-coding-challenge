@@ -77,6 +77,7 @@ class _MainScreenState extends State<MainScreen> {
                             });
                           },
                           value:  this._currentCuisineSelected,
+                          style: TextStyle(color: Colors.white),
                         );
                       } else {
                         return Center(child: CircularProgressIndicator());
@@ -105,6 +106,7 @@ class _MainScreenState extends State<MainScreen> {
                             });
                           },
                           value:  this._currentCategorieSelected,
+                          style: TextStyle(color: Colors.white),
                         );
                       } else {
                         return Center(child: CircularProgressIndicator());
