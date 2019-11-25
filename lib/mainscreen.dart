@@ -69,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
                             this._currentCuisineSelected = newValueSelected;
                           });
                       },
-                      value: _currentCuisineSelected,
+                      value: this._currentCuisineSelected,
                     ),
                 ),
                 Expanded(
