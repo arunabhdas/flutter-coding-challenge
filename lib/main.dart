@@ -20,6 +20,7 @@ class SuburbanSpoon extends StatelessWidget {
         unselectedWidgetColor: Colors.white,
         textSelectionColor: Colors.white,
         accentColor: Colors.green,
+          canvasColor: Color(0Xff622f74),
       ),
       home: MainScreen(),
     );
