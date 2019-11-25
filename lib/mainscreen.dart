@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   String _currentAddress;
   List<CuisineCuisine> _cuisineList = [];
   String _currentCuisineSelected = "1035";
+  String _currentCategorieSelected = "1";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,25 +86,25 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 Expanded(
                   child: FutureBuilder(
-                    future: _loadCuisineList(),
-                    builder: (BuildContext context, AsyncSnapshot<List<CuisineCuisine>> snapshot) {
+                    future: _loadCategorieList(),
+                    builder: (BuildContext context, AsyncSnapshot<List<Categorie>> snapshot) {
                       if (snapshot.hasData) {
-                        List<CuisineCuisine> cList = snapshot.data;
+                        List<Categorie> cList = snapshot.data;
                         return DropdownButton<String>(
-                          items: cList.map((CuisineCuisine cuisineCuisine) {
+                          items: cList.map((Categorie categorie) {
                             return new DropdownMenuItem<String>(
-                              value: cuisineCuisine.cuisineId.toString(),
-                              child: new Text(cuisineCuisine.cuisineName),
+                              value: categorie.id.toString(),
+                              child: new Text(categorie.name),
                             );
                           }).toList(),
 
                           onChanged: (String newValueSelected) {
                             setState(() {
                               // TODO-FIXME-DEBUG
-                              this._currentCuisineSelected = newValueSelected;
+                              this._currentCategorieSelected = newValueSelected;
                             });
                           },
-                          value:  this._currentCuisineSelected,
+                          value:  this._currentCategorieSelected,
                         );
                       } else {
                         return Center(child: CircularProgressIndicator());
