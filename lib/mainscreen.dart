@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_coding_challenge/model/cuisine.dart';
 import 'package:http/http.dart';
 import 'detailscreen.dart';
 import 'package:http/http.dart' show get;
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'model/cuisines_response.dart';
+import 'dart:async';
+import 'dart:convert';
+
 
 class MainScreen extends StatefulWidget {
 
@@ -18,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
+  List<Cuisine> _cuisineList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,6 +159,22 @@ class _MainScreenState extends State<MainScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<List<Cuisine>> _loadCuisineList() async {
+    List<Cuisine> cuisineList = [];
+    var url = 'https://developers.zomato.com/api/v2.1/cuisines?city_id=89';
+    Map<String, String> headers = {"user-key": "327e75c31ca03dbb55cbabe4257acfa9"};
+    Response data = await get(url, headers: headers);
+    var jsonData = json.decode(data.body);
+    cuisineList = new List<Cuisine>.from(jsonData['cuisines']);
+
+    for (var cuisine in cuisineList) {
+      Cuisine cui = Cuisine(cuisineId: cuisine.cuisineId, cuisineName: cuisine.cuisineName);
+      cuisineList.add(cui);
+    }
+    print(cuisineList);
+    return cuisineList;
   }
 
 }
