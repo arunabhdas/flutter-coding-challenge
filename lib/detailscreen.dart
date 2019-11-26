@@ -17,13 +17,35 @@ class DetailScreen extends StatefulWidget {
 }
 
 class DyanmicList extends State<DetailScreen> {
-  List<String> litems = [];
   @override
   Widget build (BuildContext ctxt) {
     return new Scaffold(
       appBar: AppBar(
         title: Text('DetailScreen'),
       ),
+      body: Container(
+        child: FutureBuilder(
+          future: _loadRestaurantList(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(snapshot.data[index].name),
+                    );
+                  }
+              );
+            } else {
+                return Container(
+                  child: Center(
+                    child: Text("Loading"),
+                  ),
+                );
+            }
+          },
+        ),
+      )
     );
   }
 
