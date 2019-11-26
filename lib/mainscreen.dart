@@ -139,7 +139,10 @@ class _MainScreenState extends State<MainScreen> {
                     color: new Color(0xff622f74),
                     onPressed: () {
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => DetailScreen()),
+                        MaterialPageRoute(builder: (context) {
+                          return new DetailScreen();
+                          }
+                        ),
                       );
                     },
                   ),
