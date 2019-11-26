@@ -134,7 +134,10 @@ class _MainScreenState extends State<MainScreen> {
                    color: new Color(0xff622f74),
                    onPressed: () {
                      Navigator.push(context,
-                       MaterialPageRoute(builder: (context) => DetailScreen()),
+                       MaterialPageRoute(builder: (context)  {
+                         return new DetailScreen(catId: "1", cuisId: "1035");
+                       }
+                      ),
                      );
                    },
                  ),
@@ -150,7 +153,7 @@ class _MainScreenState extends State<MainScreen> {
                     onPressed: () {
                       Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return new DetailScreen();
+                          return new DetailScreen(catId: "1", cuisId: "1035");
                           }
                         ),
                       );
