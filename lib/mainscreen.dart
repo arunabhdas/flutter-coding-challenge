@@ -120,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
              children: <Widget>[
                Expanded(
                  child: RaisedButton(
-                   child: Text('Spin'),
+                   child: Text('Shake'),
                    color: new Color(0xff622f74),
                    onPressed: () {
                      Navigator.push(context,
