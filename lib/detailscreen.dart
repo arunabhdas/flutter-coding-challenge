@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_coding_challenge/model/restaurant_element.dart';
 import 'package:flutter_coding_challenge/model/restaurant_restaurant.dart';
@@ -24,6 +26,7 @@ class DyanmicList extends State<DetailScreen> {
         title: Text('DetailScreen'),
       ),
       body: Container(
+        color: Colors.indigo,
         child: FutureBuilder(
           future: _loadRestaurantList(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -31,8 +34,22 @@ class DyanmicList extends State<DetailScreen> {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(snapshot.data[index].name),
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            snapshot.data[index].thumb
+                          ),
+                        ),
+                        title: Text(snapshot.data[index].name),
+                        subtitle: Text(snapshot.data[index].location.address),
+                        onTap: () {
+                          // do something
+                        },
+                        onLongPress: (){
+                          // do something else
+                        },
+                      ),
                     );
                   }
               );
