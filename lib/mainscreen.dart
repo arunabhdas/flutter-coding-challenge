@@ -117,6 +117,16 @@ class _MainScreenState extends State<MainScreen> {
               ],
             ),
             Row(
+              children: <Widget>[
+                Expanded(
+                  child: IconButton(icon: Icon(Icons.lock),),
+                ),
+                Expanded(
+                  child: IconButton(icon: Icon(Icons.lock),),
+                )
+              ],
+            ),
+            Row(
              children: <Widget>[
                Expanded(
                  child: RaisedButton(
